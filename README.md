@@ -1,58 +1,115 @@
-# create-svelte
+# Svelte Lazy Component
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+**Svelte Lazy Component** is a library designed for dynamically loading components in your Svelte project. It supports asynchronous component loading, passing dynamic props, and handling events effortlessly.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+---
 
-## Creating a project
+## ✨ Key Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Lazy Loading**: Load components only when needed.
+- **Dynamic Props**: Pass dynamic properties to lazy-loaded components.
+- **Asynchronous Component Loading**: Utilize `import()` to load components asynchronously.
+- **Child Content Support**: Easily include child content inside components.
+- **Event Handling**: Handle events from lazy-loaded components intuitively.
 
-```bash
-# create a new project in the current directory
-npx sv create
+---
 
-# create a new project in my-app
-npx sv create my-app
+## 📄 Basic Usage
+
+### Import the Component
+Use `LazyComponent` to load components dynamically.
+
+```svelte
+<script>
+	import LazyComponent from '$lib/LazyComponent.svelte';
+
+	let inputValue = '';
+</script>
+
+<LazyComponent
+	component={() => import('$components/Input.svelte')}
+	defaultValue="Lazy Loaded Value"
+	onInput={(event) => {
+		inputValue = event.target.value;
+	}}
+/>
+
+<p>Input Value: {inputValue}</p>
 ```
 
-## Developing
+### Pass Props and Use Child Content
+You can pass props and add child content.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+```svelte
+<LazyComponent
+	component={() => import('$components/Hello.svelte')}
+	name="John Doe"
+>
+	<p>This is child content</p>
+</LazyComponent>
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+### Render Multiple Components
+Use `#each` to render multiple `LazyComponent` instances.
 
-## Building
+```svelte
+<script>
+	const avatars = Array.from({ length: 5 }, (_, i) => ({
+		url: `https://picsum.photos/200/200?id=${i}`,
+		name: `User ${i}`,
+		content: `Content ${i}`,
+	}));
+</script>
 
-To build your library:
-
-```bash
-npm run package
+{#each avatars as avatar}
+	<LazyComponent
+		component={() => import('$components/GalleryPhoto.svelte')}
+		{...avatar}
+	/>
+{/each}
 ```
 
-To create a production version of your showcase app:
+---
 
-```bash
-npm run build
-```
+## 🔧 API
 
-You can preview the production build with `npm run preview`.
+### Props
+- **`component`** _(required)_: An asynchronous function to load the component (`import()`).
+- **`...props`**: Properties passed to the loaded component.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+### Events
+- **Custom Events**: Handle events the usual way (e.g., `on:eventName`).
 
-## Publishing
+---
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+## 🔗 Example Project
 
-To publish your library to [npm](https://www.npmjs.com):
+Check out the implementation example on [GitHub Repository](https://github.com/binsarjr/svelte-lazy-component/blob/main/src/lib/LazyComponent.svelte).
 
-```bash
-npm publish
-```
+---
+
+## 🛠 Usage Notes
+1. Currently, bindable props are not supported. Use event handlers to update values as needed.
+2. The library is designed for easy lazy loading. Manage your dependencies efficiently for the best experience.
+
+---
+
+## 🏗 Development and Contribution
+
+We welcome contributions to this project! Here's how you can help:
+
+1. **Improve Documentation**: The library needs better documentation. If you have experience writing clear, user-friendly documentation, your contributions are highly appreciated!
+2. **Report Bugs**: Found an issue? Let us know by opening a GitHub issue.
+3. **Add Features**: Have a great idea? Fork the repository, implement your feature, and create a pull request.
+
+<!-- For any contribution, please check the [Contributing Guide](https://github.com/binsarjr/svelte-lazy-component/blob/main/CONTRIBUTING.md). -->
+
+---
+
+## 📜 License
+
+This library is released under the MIT License. Feel free to use it in your projects.
+
+--- 
+
+Contributions are highly appreciated! Let's make this library even better. 🚀
