@@ -84,7 +84,7 @@ Use `#each` to render multiple `LazyComponent` instances.
 
 ## 🔗 Example Project
 
-Check out the implementation example on [GitHub Repository](https://github.com/binsarjr/svelte-lazy-component/blob/main/src/lib/LazyComponent.svelte).
+Check out the implementation example on [GitHub Repository](https://github.com/binsarjr/svelte-lazy-component/blob/main/src/routes/+page.svelte).
 
 ---
 
