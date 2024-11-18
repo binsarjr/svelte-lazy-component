@@ -30,6 +30,16 @@
 
 {@render justForWaiting()}
 
+<!-- Need props? Just do it the way you always slay it—effortlessly iconic! -->
+<LazyComponent
+	component={() => import('$components/Intro.svelte')}
+	name="Binsar"
+	age={20}
+	github="binsarjr"
+>
+	you can even use children like this
+</LazyComponent>
+
 {#each { length: 5 } as _, i}
 	{@const avatar = `https://picsum.photos/200/200?id=${i}`}
 	{@const name = `${Math.random() * 1000}`}
@@ -43,6 +53,7 @@
 {/each}
 
 {@render justForWaiting()}
+
 <LazyComponent
 	component={() => import('$components/Input.svelte')}
 	defaultValue="Hello From Lazy Loaded"
