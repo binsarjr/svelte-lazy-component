@@ -21,7 +21,7 @@
 {#snippet justForWaiting()}
 	{#each { length: 20 } as _}
 		{#if done}
-			<div>Loaded</div>
+			<div>Done Loaded All Lazy Component</div>
 		{:else}
 			<div>scroll down (see your network traffic)</div>
 		{/if}
